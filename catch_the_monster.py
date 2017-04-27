@@ -40,6 +40,13 @@ class Sprite:
         self.pos = [x, y]
         self.render(screen)
 
+def crash_check(mon_pos, hero_pos):
+    dist_apart = math.sqrt((mon_pos[0] - hero_pos[0])**2) + math.sqrt((mon_pos[1] - hero_pos[1])**2)
+    if dist_apart < 32:
+        return True
+    else:
+        return False
+
 def main():
     # create sprites and background
     hero = Sprite('images/hero.png')
@@ -56,7 +63,7 @@ def main():
     count = -1
 
     # main game loop starts
-    while True:
+    while not crash_check(monster.pos, hero.pos):
         screen.blit(background, (0, 0))
         hero.move(herox, heroy)
         monster.move(monx, mony)
