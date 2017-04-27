@@ -36,6 +36,47 @@ class Sprite:
             print('An error has occurred while the game was rendering the image.')
             exit(0)
 
+class Monster(Sprite):
+    def move(self, switch):
+        x = self.pos[0]
+        y = self.pos[1]
+
+        # script for monster's random movement
+        if switch == 0:
+            x += 4
+        elif switch == 1:
+            x += 3
+            y += 3
+        elif switch == 2:
+            x += -3
+            y += 3
+        elif switch == 3:
+            x += -4
+        elif switch == 4:
+            y += 4
+        elif switch == 5:
+            x += 3
+            y += -3
+        elif switch == 6:
+            x += -3
+            y += -3
+        elif switch == 7:
+            y += -4
+
+        # resets monster when it moves off the edge of the screen
+        if self.pos[0] > WIDTH:
+            x = 10
+        elif self.pos[0] < 0:
+            x = WIDTH - 10
+        elif self.pos[1] > HEIGHT:
+            y = 10
+        elif self.pos[1] < 0:
+            y = HEIGHT - 10
+
+        self.pos = [x, y]
+        self.render(screen)
+
+class Hero(Sprite):
     def move(self, x, y):
         self.pos = [x, y]
         self.render(screen)
@@ -49,62 +90,24 @@ def crash_check(mon_pos, hero_pos):
 
 def main():
     # create sprites and background
-    hero = Sprite('images/hero.png')
-    monster = Sprite('images/monster.png', 120, 50)
+    hero = Hero('images/hero.png')
+    monster = Monster('images/monster.png', 120, 50)
     background = pygame.image.load('images/background.png')
 
     # initilize variables
     herox = hero.pos[0]
     heroy = hero.pos[1]
-    monx = monster.pos[0]
-    mony = monster.pos[1]
     changex = 0
     changey = 0
     count = -1
 
     # main game loop starts
     while not crash_check(monster.pos, hero.pos):
-        screen.blit(background, (0, 0))
-        hero.move(herox, heroy)
-        monster.move(monx, mony)
-
-        # script for monster's random movement
+        # counts the iterations in the loop and switches movement for monster's
+        # random love directions
         count += 1
         if count == 0 or count % 90 == 0:
             switch = random.randint(0,7)
-        if switch == 0:
-            monx += 4
-        elif switch == 1:
-            monx += 3
-            mony += 3
-        elif switch == 2:
-            monx += -3
-            mony += 3
-        elif switch == 3:
-            monx += -4
-        elif switch == 4:
-            mony += 4
-        elif switch == 5:
-            monx += 3
-            mony += -3
-        elif switch == 6:
-            monx += -3
-            mony += -3
-        elif switch == 7:
-            mony += -4
-
-        # resets monster when it moves off the edge of the screen
-        if monster.pos[0] > WIDTH:
-            monx = 10
-        elif monster.pos[0] < 0:
-            monx = WIDTH - 10
-        elif monster.pos[1] > HEIGHT:
-            mony = 10
-        elif monster.pos[1] < 0:
-            mony = HEIGHT - 10
-
-        herox += changex
-        heroy += changey
 
         # script for handling hero movement via user keyboard commands
         for event in pygame.event.get():
@@ -126,6 +129,13 @@ def main():
                     changex = 0
                 elif event.key == K_w or event.key == K_s:
                     changey = 0
+
+        herox += changex
+        heroy += changey
+
+        screen.blit(background, (0, 0))
+        hero.move(herox, heroy)
+        monster.move(switch)
 
         pygame.display.update()
         clock.tick(60)
