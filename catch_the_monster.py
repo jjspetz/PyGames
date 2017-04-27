@@ -53,12 +53,38 @@ def main():
     mony = monster.pos[1]
     changex = 0
     changey = 0
+    count = -1
 
     # main game loop starts
     while True:
         screen.blit(background, (0, 0))
         hero.move(herox, heroy)
         monster.move(monx, mony)
+
+        # script for monster's random movement
+        count += 1
+        if count == 0 or count % 90 == 0:
+            switch = random.randint(0,8)
+        if switch == 0:
+            monx += 4
+        elif switch == 1:
+            monx += 3
+            mony += 3
+        elif switch == 2:
+            monx += -3
+            mony += 3
+        elif switch == 3:
+            monx += -4
+        elif switch == 4:
+            mony += 4
+        elif switch == 5:
+            monx += 3
+            mony += -3
+        elif switch == 6:
+            monx += -3
+            mony += -3
+        elif switch == 7:
+            mony += -4
 
         herox += changex
         heroy += changey
