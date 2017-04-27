@@ -51,6 +51,8 @@ def main():
     heroy = hero.pos[1]
     monx = monster.pos[0]
     mony = monster.pos[1]
+    changex = 0
+    changey = 0
 
     # main game loop starts
     while True:
@@ -58,13 +60,29 @@ def main():
         hero.move(herox, heroy)
         monster.move(monx, mony)
 
+        herox += changex
+        heroy += changey
+
         # script for handling hero movement via user keyboard commands
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-
-            elif event.type == pygame.KEYDOWN
+                if event.key == K_ESCAPE:
+                    sys.exit()
+                elif event.key == K_w:
+                    changey = -2
+                elif event.key == K_s:
+                    changey = 2
+                elif event.key == K_a:
+                    changex = -2
+                elif event.key == K_d:
+                    changex = 2
+            elif event.type == pygame.KEYUP:
+                if event.key == K_d or event.key == K_a:
+                    changex = 0
+                elif event.key == K_w or event.key == K_s:
+                    changey = 0
 
         pygame.display.update()
         clock.tick(60)
