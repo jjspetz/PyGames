@@ -64,7 +64,7 @@ def main():
         # script for monster's random movement
         count += 1
         if count == 0 or count % 90 == 0:
-            switch = random.randint(0,8)
+            switch = random.randint(0,7)
         if switch == 0:
             monx += 4
         elif switch == 1:
@@ -85,6 +85,16 @@ def main():
             mony += -3
         elif switch == 7:
             mony += -4
+
+        # resets monster when it moves off the edge of the screen
+        if monster.pos[0] > WIDTH:
+            monx = 10
+        elif monster.pos[0] < 0:
+            monx = WIDTH - 10
+        elif monster.pos[1] > HEIGHT:
+            mony = 10
+        elif monster.pos[1] < 0:
+            mony = HEIGHT - 10
 
         herox += changex
         heroy += changey
