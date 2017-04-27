@@ -7,12 +7,11 @@ The object of the game it to catch the monster while avoiding his minions
 
 import pygame, sys, random, math
 from pygame.locals import *
-
+from characters import *
 
 # global variables
 WIDTH = 512
 HEIGHT = 480
-
 
 # set up the game
 pygame.init()
@@ -20,67 +19,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Catch the Monster')
 clock = pygame.time.Clock()
 
-class Sprite:
-    def __init__(self, filename, x=200, y=200):
-        self.img = pygame.image.load(filename)
-        self.pos = [x, y]
-        self.colorkey = [0, 0, 0]
-        self.alpha = 255
-
-    def render(self, screen):
-        try:
-            self.img.set_colorkey(self.colorkey)
-            self.img.set_alpha(self.alpha)
-            screen.blit(self.img, self.pos)
-        except:
-            print('An error has occurred while the game was rendering the image.')
-            exit(0)
-
-class Monster(Sprite):
-    def move(self, switch):
-        x = self.pos[0]
-        y = self.pos[1]
-
-        # script for monster's random movement
-        if switch == 0:
-            x += 4
-        elif switch == 1:
-            x += 3
-            y += 3
-        elif switch == 2:
-            x += -3
-            y += 3
-        elif switch == 3:
-            x += -4
-        elif switch == 4:
-            y += 4
-        elif switch == 5:
-            x += 3
-            y += -3
-        elif switch == 6:
-            x += -3
-            y += -3
-        elif switch == 7:
-            y += -4
-
-        # resets monster when it moves off the edge of the screen
-        if self.pos[0] > WIDTH:
-            x = 10
-        elif self.pos[0] < 0:
-            x = WIDTH - 10
-        elif self.pos[1] > HEIGHT:
-            y = 10
-        elif self.pos[1] < 0:
-            y = HEIGHT - 10
-
-        self.pos = [x, y]
-        self.render(screen)
-
-class Hero(Sprite):
-    def move(self, x, y):
-        self.pos = [x, y]
-        self.render(screen)
-
+# checks if the hero has caught the monster
 def crash_check(mon_pos, hero_pos):
     dist_apart = math.sqrt((mon_pos[0] - hero_pos[0])**2) + math.sqrt((mon_pos[1] - hero_pos[1])**2)
     if dist_apart < 32:
@@ -134,8 +73,8 @@ def main():
         heroy += changey
 
         screen.blit(background, (0, 0))
-        hero.move(herox, heroy)
-        monster.move(switch)
+        hero.move(herox, heroy, screen)
+        monster.move(switch, screen, WIDTH, HEIGHT)
 
         pygame.display.update()
         clock.tick(60)
