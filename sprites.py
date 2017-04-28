@@ -44,13 +44,13 @@ class Sprite:
             y += -4 * self.speed
 
         # resets monster when it moves off the edge of the screen
-        if self.pos[0] > width:
+        if self.pos[0] > width + 100:
             x = 20
-        elif self.pos[0] < 0:
+        elif self.pos[0] < -100:
             x = width- 20
-        elif self.pos[1] > height:
+        elif self.pos[1] > height + 100:
             y = 20
-        elif self.pos[1] < 0:
+        elif self.pos[1] < -100:
             y = height - 20
 
         self.pos = [x, y]
@@ -61,10 +61,10 @@ class Astroid(Sprite):
         self.img = pygame.image.load(random.choice(['images/astroid1.png',
          'images/astroid2.png', 'images/astroid3.png', 'images/astroid4.png']))
         self.pos = random.choice(
-            [[0, random.randint(0,HEIGHT)],
-            [WIDTH - 100 , random.randint(0,HEIGHT)],
-            [random.randint(0, WIDTH), 0],
-            [random.randint(0, WIDTH), HEIGHT - 100]]
+            [[-100, random.randint(0,HEIGHT)],
+            [WIDTH, random.randint(0,HEIGHT)],
+            [random.randint(0, WIDTH), -100],
+            [random.randint(0, WIDTH), HEIGHT]]
             )
         self.colorkey = [0, 0, 0]
         self.alpha = 255
