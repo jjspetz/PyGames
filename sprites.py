@@ -78,8 +78,8 @@ class Astroid(Sprite):
         self.img = pygame.transform.rotozoom(self.img, 0, random.random())
 
 class Ship(Sprite):
-    def __init__(self, filename):
-        self.img = pygame.image.load(filename)
+    def __init__(self):
+        self.img = pygame.image.load('images/spaceship_sm.png')
         self.pos = [200, 200]
         self.colorkey = [0, 0, 0]
         self.alpha = 255
