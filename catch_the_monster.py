@@ -78,7 +78,7 @@ def lose_screen(LEVEL):
                     sys.exit()
 
         text = "You Lost on"
-        text2 = "Level " + str(LEVEL)
+        text2 = "Level " + str(LEVEL - 1)
 
         pygame.font.init()
         myfont = pygame.font.SysFont('Comic Sans MS', 30)
