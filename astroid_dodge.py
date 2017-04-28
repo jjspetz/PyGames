@@ -62,7 +62,7 @@ def menu_screen(count, first=True):
 
 def main():
     # create sprites and background
-    ship = Ship('images/spaceship.png')
+    ship = Ship('images/spaceship_sm.png')
     screen.fill((0,0,0))
     # builds astroid list
     astroids = []
