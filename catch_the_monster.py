@@ -72,6 +72,15 @@ def main():
         herox += changex
         heroy += changey
 
+        if herox < 30:
+            herox = 30
+        if herox > WIDTH - 60:
+            herox = WIDTH - 60
+        if heroy < 30:
+            heroy = 30
+        if heroy > HEIGHT -60:
+            heroy = HEIGHT - 60
+
         screen.blit(background, (0, 0))
         hero.move(herox, heroy, screen)
         monster.move(switch, screen, WIDTH, HEIGHT)
