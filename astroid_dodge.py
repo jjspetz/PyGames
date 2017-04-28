@@ -28,12 +28,16 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Astroid Mayhem')
 clock = pygame.time.Clock()
 
-#
+# Calculates if ship hit an astroid
 def collision_check(astroids, ship_pos):
+    ship_circle = {'radius': 32, 'x': ship_pos[0]+ 32, 'y': ship_pos[1] + 32}
     for astroid in astroids:
-        dist_apart = math.sqrt(((astroid.pos[0] + astroid.dist_to_middle) - (ship_pos[0]+32))**2) \
-        + math.sqrt(((astroid.pos[1] + astroid.dist_to_middle)- (ship_pos[1]+32))**2)
-        if dist_apart < 70:
+        astroid_circle = {'radius': astroid.dist_to_middle, 'x': astroid.pos[0]
+        + astroid.dist_to_middle, 'y': astroid.pos[1] + astroid.dist_to_middle}
+        dx = ship_circle['x'] - astroid_circle['x']
+        dy = ship_circle['y'] - astroid_circle['y']
+        dist_apart = math.sqrt(dx * dx + dy * dy)
+        if dist_apart < astroid_circle['radius']+ship_circle['radius']-15:
             pygame.mixer.music.stop()
             pygame.mixer.music.load('sounds/lose.wav')
             pygame.mixer.music.play()
@@ -55,7 +59,7 @@ def menu_screen(count, first=True):
                     main()
 
         text = "Hit RETURN to begin"
-        text2 = "You survied for " + str(int(count/60)) + " seconds"
+        text2 = "You survied for " + str(round(count/60, 2)) + " seconds"
 
         pygame.font.init()
         myfont = pygame.font.SysFont('Comic Sans MS', 30)
@@ -153,7 +157,6 @@ def main():
                 #     changex = 0
                 # elif joystick.get_axis(1) <= .5 and joystick.get_axis(1) >= -.5:
                 #     changey = 0
-
 
 
         shipx += changex
