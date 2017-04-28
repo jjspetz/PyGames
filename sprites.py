@@ -70,7 +70,14 @@ class Astroid(Sprite):
         self.alpha = 255
         self.speed = random.randint(1, 10) / 10
         self.switch = random.randint(0,7)
+        self.rotation = random.randint(0, 360)
+        self.scale = random.randint(50, 125)/100
+        self.img = pygame.transform.rotozoom(self.img, self.rotation, self.scale)
         self.dist_to_middle = 50 * self.scale  # used to calculate hit box from center of img
+
+    def rotate(self):
+        self.img = pygame.transform.rotozoom(self.img, 0, random.random())
+
 
 class Ship(Sprite):
     def __init__(self, filename):
