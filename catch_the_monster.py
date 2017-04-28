@@ -66,7 +66,7 @@ def menu_screen(LEVEL):
         pygame.display.update()
         clock.tick(60)
 
-def lose_screen():
+def lose_screen(LEVEL):
     while True:
         screen.fill((219, 28, 44))
 
@@ -77,12 +77,16 @@ def lose_screen():
                 if event.key == K_RETURN or event.key == K_ESCAPE or event.key == K_x:
                     sys.exit()
 
-        text = "You Lose!"
+        text = "You Lost on"
+        text2 = "Level " + str(LEVEL)
 
         pygame.font.init()
         myfont = pygame.font.SysFont('Comic Sans MS', 30)
         textsurface = myfont.render(text, False, (0, 0, 0))
-        screen.blit(textsurface,(195,220))
+        screen.blit(textsurface,(195,195))
+
+        textsurface2 = myfont.render(text2, False, (0, 0, 0))
+        screen.blit(textsurface2,(220,230))
 
         pygame.display.update()
         clock.tick(60)
@@ -102,7 +106,7 @@ def main(LEVEL):
 
     # builds goblin list
     goblins = []
-    for i in range(LEVEL):
+    for i in range(int(LEVEL/2) + 1):
         goblins.append(Goblin('images/goblin.png', LEVEL))
 
 
@@ -171,10 +175,10 @@ def main(LEVEL):
         if crash_check(monster.pos, hero.pos):
             menu_screen(LEVEL)
         if goblin_check(goblins, hero.pos):
-            lose_screen()
+            lose_screen(LEVEL)
 
         pygame.display.update()
         clock.tick(60)
 
 if __name__ == "__main__":
-    menu_screen(0)
+    menu_screen(1)

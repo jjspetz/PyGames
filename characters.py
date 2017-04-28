@@ -74,7 +74,7 @@ class Goblin(Sprite):
         self.pos = random.choice(
             [[random.randint(20,100), random.randint(20,100)],
             [random.randint(100,150), random.randint(100,150)],
-            [random.randint(250,325), random.randint(250,325)],
+            [random.randint(270,325), random.randint(270,325)],
             [random.randint(325,460), random.randint(325,460)]]
             )
         self.colorkey = [0, 0, 0]
