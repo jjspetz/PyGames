@@ -95,7 +95,7 @@ def main():
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == K_ESCAPE:
+                if event.key == K_ESCAPE or event.key == K_q:
                     sys.exit()
                 elif event.key == K_w:
                     changey = -4
@@ -110,6 +110,7 @@ def main():
                     changex = 0
                 elif event.key == K_w or event.key == K_s:
                     changey = 0
+
 
         shipx += changex
         shipy += changey
@@ -130,6 +131,7 @@ def main():
         # updates astroids on screen
         for astroid in astroids:
             astroid.move(count, screen, WIDTH, HEIGHT)
+        #    astroid.rotate()
 
         if collision_check(astroids, ship.pos):
             menu_screen(count, False)
