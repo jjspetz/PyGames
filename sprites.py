@@ -70,6 +70,7 @@ class Astroid(Sprite):
         self.alpha = 255
         self.speed = random.randint(1, 10) / 10
         self.switch = random.randint(0,7)
+        self.dist_to_middle = 50 * self.scale  # used to calculate hit box from center of img
 
 class Ship(Sprite):
     def __init__(self, filename):
