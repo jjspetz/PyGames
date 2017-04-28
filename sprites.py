@@ -80,8 +80,8 @@ class Astroid(Sprite):
 
 
 class Ship(Sprite):
-    def __init__(self, filename):
-        self.img = pygame.image.load(filename)
+    def __init__(self):
+        self.img = pygame.image.load('images/spaceship_sm.png')
         self.pos = [200, 200]
         self.colorkey = [0, 0, 0]
         self.alpha = 255

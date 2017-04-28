@@ -15,6 +15,15 @@ HEIGHT = 840
 
 # set up the game
 pygame.init()
+pygame.joystick.init()
+# Get count of joysticks
+joystick_count = pygame.joystick.get_count()
+
+# For each joystick:
+for i in range(joystick_count):
+    joystick = pygame.joystick.Joystick(i)
+    joystick.init()
+
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Astroid Mayhem')
 clock = pygame.time.Clock()
@@ -66,7 +75,7 @@ def menu_screen(count, first=True):
 
 def main():
     # create sprites and background
-    ship = Ship('images/spaceship_sm.png')
+    ship = Ship()
     screen.fill((0,0,0))
     # builds astroid list
     astroids = []
@@ -114,6 +123,38 @@ def main():
                     changex = 0
                 elif event.key == K_w or event.key == K_s:
                     changey = 0
+    #    joystick controls   axis 0 left-right neg-pos, axis 1 up-down neg-pos
+            if joystick.get_axis(0) < -.5 and joystick.get_axis(1) < -.5:
+                changex = -4
+                changey = -4
+            elif joystick.get_axis(0) > .5 and joystick.get_axis(1) < -.5:            
+                changex = 4
+                changey = -4
+            elif joystick.get_axis(0) < -.5 and joystick.get_axis(1) > .5:
+                changex = -4
+                changey = 4
+            elif joystick.get_axis(0) > .5 and joystick.get_axis(1) > .5:
+                 changex = 4
+                 changey = 4
+            elif joystick.get_axis(1) > .5:
+                changey = 4
+            elif joystick.get_axis(1) < -.5:
+                 changey = -4
+            elif joystick.get_axis(0) < -.5:
+                changex = -4
+            elif joystick.get_axis(0) > .5:
+                changex = 4
+            if int(round(joystick.get_axis(0))) == 0:
+                #print(int(round(joystick.get_axis(0))))
+                changex = 0
+            if int(round(joystick.get_axis(1))) == 0:
+                #print(int(round(joystick.get_axis(1))))
+                changey = 0
+            # elif joystick.get_axis(0) <= .5 and joystick.get_axis(0) >= -.5:
+            #     changex = 0
+            # elif joystick.get_axis(1) <= .5 and joystick.get_axis(1) >= -.5:
+            #     changey = 0
+
 
 
         shipx += changex
