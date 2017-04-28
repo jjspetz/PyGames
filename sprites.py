@@ -45,11 +45,11 @@ class Sprite:
 
         # resets monster when it moves off the edge of the screen
         if self.pos[0] > width + 100:
-            x = 20
+            x = 0
         elif self.pos[0] < -100:
             x = width- 20
         elif self.pos[1] > height + 100:
-            y = 20
+            y = 0
         elif self.pos[1] < -100:
             y = height - 20
 
