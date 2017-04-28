@@ -106,6 +106,8 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == K_ESCAPE or event.key == K_q:
                     sys.exit()
+                elif event.key == K_r:
+                    ship.rot_center()
                 elif event.key == K_w:
                     changey = -4
                 elif event.key == K_s:
@@ -120,36 +122,37 @@ def main():
                 elif event.key == K_w or event.key == K_s:
                     changey = 0
     #    joystick controls   axis 0 left-right neg-pos, axis 1 up-down neg-pos
-            if joystick.get_axis(0) < -.5 and joystick.get_axis(1) < -.5:
-                changex = -4
-                changey = -4
-            elif joystick.get_axis(0) > .5 and joystick.get_axis(1) < -.5:            
-                changex = 4
-                changey = -4
-            elif joystick.get_axis(0) < -.5 and joystick.get_axis(1) > .5:
-                changex = -4
-                changey = 4
-            elif joystick.get_axis(0) > .5 and joystick.get_axis(1) > .5:
-                 changex = 4
-                 changey = 4
-            elif joystick.get_axis(1) > .5:
-                changey = 4
-            elif joystick.get_axis(1) < -.5:
-                 changey = -4
-            elif joystick.get_axis(0) < -.5:
-                changex = -4
-            elif joystick.get_axis(0) > .5:
-                changex = 4
-            if int(round(joystick.get_axis(0))) == 0:
-                #print(int(round(joystick.get_axis(0))))
-                changex = 0
-            if int(round(joystick.get_axis(1))) == 0:
-                #print(int(round(joystick.get_axis(1))))
-                changey = 0
-            # elif joystick.get_axis(0) <= .5 and joystick.get_axis(0) >= -.5:
-            #     changex = 0
-            # elif joystick.get_axis(1) <= .5 and joystick.get_axis(1) >= -.5:
-            #     changey = 0
+            elif event.type == pygame.JOYAXISMOTION:
+                if joystick.get_axis(0) < -.5 and joystick.get_axis(1) < -.5:
+                    changex = -4
+                    changey = -4
+                elif joystick.get_axis(0) > .5 and joystick.get_axis(1) < -.5:
+                    changex = 4
+                    changey = -4
+                elif joystick.get_axis(0) < -.5 and joystick.get_axis(1) > .5:
+                    changex = -4
+                    changey = 4
+                elif joystick.get_axis(0) > .5 and joystick.get_axis(1) > .5:
+                     changex = 4
+                     changey = 4
+                elif joystick.get_axis(1) > .5:
+                    changey = 4
+                elif joystick.get_axis(1) < -.5:
+                     changey = -4
+                elif joystick.get_axis(0) < -.5:
+                    changex = -4
+                elif joystick.get_axis(0) > .5:
+                    changex = 4
+                if int(round(joystick.get_axis(0))) == 0:
+                    #print(int(round(joystick.get_axis(0))))
+                    changex = 0
+                if int(round(joystick.get_axis(1))) == 0:
+                    #print(int(round(joystick.get_axis(1))))
+                    changey = 0
+                # elif joystick.get_axis(0) <= .5 and joystick.get_axis(0) >= -.5:
+                #     changex = 0
+                # elif joystick.get_axis(1) <= .5 and joystick.get_axis(1) >= -.5:
+                #     changey = 0
 
 
 
@@ -172,7 +175,7 @@ def main():
         # updates astroids on screen
         for astroid in astroids:
             astroid.move(count, screen, WIDTH, HEIGHT)
-        #    astroid.rotate()
+            astroid.rot_center()
 
         if collision_check(astroids, ship.pos):
             menu_screen(count, False)

@@ -7,6 +7,7 @@ class Sprite:
         self.colorkey = [0, 0, 0]
         self.alpha = 255
         self.speed = 1
+        self.rotation = 0
 
     def render(self, screen):
         try:
@@ -16,6 +17,17 @@ class Sprite:
         except:
             print('An error has occurred while the game was rendering the image.')
             exit(0)
+
+    def rot_center(self):
+        """rotate an image while keeping its center and size"""
+        image = self.img
+        angle = self.rotation
+        orig_rect = image.get_rect()
+        rot_image = pygame.transform.rotate(image, angle)
+        rot_rect = orig_rect.copy()
+        rot_rect.center = rot_image.get_rect().center
+        rot_image = rot_image.subsurface(rot_rect).copy()
+        self.img = rot_image
 
     def move(self, count, screen, width, height):
         x = self.pos[0]
@@ -70,7 +82,7 @@ class Astroid(Sprite):
         self.alpha = 255
         self.speed = random.randint(1, 10) / 10
         self.switch = random.randint(0,7)
-        self.rotation = random.randint(0, 360)
+        self.rotation = random.randint(-3, 3)
         self.scale = random.randint(50, 125)/100
         self.img = pygame.transform.rotozoom(self.img, self.rotation, self.scale)
         self.dist_to_middle = 50 * self.scale  # used to calculate hit box from center of img
@@ -85,6 +97,12 @@ class Ship(Sprite):
         self.pos = [200, 200]
         self.colorkey = [0, 0, 0]
         self.alpha = 255
+        self.rotation = 45
+
+#    def rotate(self):
+    #    self.img = pygame.transform.rotozoom(self.img, 0, self.rotation)
+
+
 
     def move(self, x, y, screen):
         self.pos = [x, y]
