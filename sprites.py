@@ -102,8 +102,6 @@ class Ship(Sprite):
 #    def rotate(self):
     #    self.img = pygame.transform.rotozoom(self.img, 0, self.rotation)
 
-
-
     def move(self, x, y, screen):
         self.pos = [x, y]
         self.render(screen)

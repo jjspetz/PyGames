@@ -24,7 +24,7 @@ for i in range(joystick_count):
     joystick = pygame.joystick.Joystick(i)
     joystick.init()
 
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((WIDTH, HEIGHT), FULLSCREEN)
 pygame.display.set_caption('Astroid Mayhem')
 clock = pygame.time.Clock()
 
@@ -64,11 +64,16 @@ def menu_screen(count, first=True):
         pygame.font.init()
         myfont = pygame.font.SysFont('Comic Sans MS', 30)
         textsurface = myfont.render(text, False, (0, 0, 0))
-        screen.blit(textsurface,(195,195))
-
+        screen.blit(textsurface,(WIDTH/2 - len(text)*5, HEIGHT/2 - 30))
+        # if the menu is set to load when program starts tjos won't be displayed
         if not first:
             textsurface2 = myfont.render(text2, False, (0, 0, 0))
-            screen.blit(textsurface2,(220,230))
+            screen.blit(textsurface2,(WIDTH/2 - len(text2)*5, HEIGHT/2))
+        # will display the first time game is started only
+        else:
+            text3 = "Avoid the astroids for as long as possible"
+            textsurface2 = myfont.render(text3, False, (0, 0, 0))
+            screen.blit(textsurface2,(WIDTH/2 - len(text3)*5, HEIGHT/2))
 
         pygame.display.update()
         clock.tick(60)
@@ -125,7 +130,8 @@ def main():
                     changex = 0
                 elif event.key == K_w or event.key == K_s:
                     changey = 0
-    #    joystick controls   axis 0 left-right neg-pos, axis 1 up-down neg-pos
+
+            # joystick controls   axis 0 left-right neg-pos, axis 1 up-down neg-pos
             elif event.type == pygame.JOYAXISMOTION:
                 if joystick.get_axis(0) < -.5 and joystick.get_axis(1) < -.5:
                     changex = -4
@@ -178,7 +184,7 @@ def main():
         # updates astroids on screen
         for astroid in astroids:
             astroid.move(count, screen, WIDTH, HEIGHT)
-            astroid.rot_center()
+            # astroid.rot_center()
 
         if collision_check(astroids, ship.pos):
             menu_screen(count, False)
@@ -187,4 +193,4 @@ def main():
         clock.tick(60)
 
 if __name__ == "__main__":
-    main()
+    menu_screen(0)
