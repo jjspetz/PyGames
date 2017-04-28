@@ -22,9 +22,9 @@ clock = pygame.time.Clock()
 #
 def collision_check(astroids, ship_pos):
     for astroid in astroids:
-        dist_apart = math.sqrt((astroid.pos[0] - ship_pos[0])**2) \
-        + math.sqrt((astroid.pos[1] - ship_pos[1])**2)
-        if dist_apart < 32:
+        dist_apart = math.sqrt(((astroid.pos[0] + astroid.dist_to_middle) - (ship_pos[0]+32))**2) \
+        + math.sqrt(((astroid.pos[1] + astroid.dist_to_middle)- (ship_pos[1]+32))**2)
+        if dist_apart < 70:
             pygame.mixer.music.stop()
             pygame.mixer.music.load('sounds/lose.wav')
             pygame.mixer.music.play()
